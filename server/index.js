@@ -1,12 +1,21 @@
-const needle = require('needle');
+const Nightmare = require('nightmare');
 const cheerio = require('cheerio');
 
-needle.get('https://www.facebook.com/people/%D0%AF%D0%BD%D0%B0-%D0%A1%D0%BE%D0%BA%D0%BE%D0%BB%D1%8C%D1%81%D0%BA%D0%B0%D1%8F/100035700768682', function(error, response) {
-  if (!error && response.statusCode == 200) {
-    let $ = cheerio.load(response.body);
-    console.log(response.headers['content-type'])
-    console.log($('img._11kf.img')[0].attribs.alt);
+const nightmare = Nightmare({ show: false });
+const url = 'http://localhost:4000/';
+
+nightmare
+  .goto(url)
+  .wait('#root')
+  .evaluate(() => document.querySelector('body').innerHTML)
+  .end()
+  .then(response => {
+    console.log(getData(response));
+  }).catch(err => console.log);
+
+  let getData = html => {
+    data = [];
+    const $ = cheerio.load(html);
+    $('a').each((i,elem)=>data.push(elem.attribs.href));
+    return data;
   }
-  console.log(response.statusCode);
-    
-});
