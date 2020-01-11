@@ -5,7 +5,10 @@ export default class SiteHeader extends Component {
         return (
             <header>
                 <h1>Построение графа сайта</h1>
-                <input type="text" className="site-addr" placeholder='Введите адрес сайта'/>
+                <div className="form__group field">
+                    <input type="text" name="site-addr" className="site-addr form__field" placeholder='Введите адрес сайта' />
+                    <label htmlFor="site-addr" className="form__label">Введите адрес сайта</label>
+                </div>
             </header>
         )
     }
